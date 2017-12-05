@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="user", schema="WebDB")
+@Table(name="userlogin", schema="WebDB")
 public class User
 {
     @Id
@@ -15,7 +15,7 @@ public class User
     private String username;
     private String password;
     private String role;
-
+    private int admin;
 
     public String getUsername()
     {
@@ -46,4 +46,15 @@ public class User
     {
         this.role = role;
     }
+
+    public int getAdmin()
+    {
+        return admin;
+    }
+
+    public void setAdmin(int admin)
+    {
+        this.admin = admin;
+    }
 }
+

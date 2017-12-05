@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -24,14 +23,15 @@ public class UserController
     }
 
     @PostMapping("/signup")
-    public @ResponseBody String adduser(@RequestParam String username,@RequestParam String password,@RequestParam String role)
+    public  String adduser(@RequestParam String username,@RequestParam String password,@RequestParam String role)
     {
         User user=new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setRole(role);
+        user.setAdmin(0);
         userRepository.save(user);
-        return "saved";
+        return "login";
     }
 
     @GetMapping("/login")
@@ -51,10 +51,19 @@ public class UserController
             {
                 session.setAttribute("user",userRepository.findByUsername(username));
                 session.setAttribute("role",userRepository.findByUsername(username).getRole());
+                session.setAttribute("admin",userRepository.findByUsername(username).getAdmin());
                 return "home";
             }
             else return "login";
         }
         else return "login";
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session)
+    {
+        session.removeAttribute("user");
+        session.removeAttribute("role");
+        session.removeAttribute("admin");
+        return "login";
     }
 }

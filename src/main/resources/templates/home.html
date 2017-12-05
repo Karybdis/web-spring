@@ -19,10 +19,34 @@
                 <li th:if="${session.role==null}">
                     <a href="login" class="glyphicon glyphicon-log-in">登录/注册</a>
                 </li>
+                <li th:if="${session.role!=null}"><a href="logout" class="glyphicon glyphicon-log-out" >登出</a></li>
                 <p class="navbar-text navbar-right" th:if="${session.role!=null}" th:text="'Hello! '+${session.role}"/>
             </ul>
         </div>
     </div>
 </nav>
+
+<div th:if="${session.admin==1}" class="panel panel-success">
+    <div class="panel-heading">新增比赛</div>
+    <div class="panel-body">
+        <form th:action="@{/addmatch}" role="form" method="post">
+            <div class="form-group col-lg-12">
+                <label for="information">比赛详情</label>
+                <textarea rows="15" class="form-control" id="information" name="information"></textarea>
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="name">比赛名称</label>
+                <input type="text" class="form-control" id="name" placeholder="请输入名称" name="match_name"/>
+            </div>
+            <!--div class="form-group col-lg-6">
+                <label for="label">标签</label>
+                <input type="text" class="form-control" id="label" name="label"/>
+            </div-->
+            <div align="center">
+                <button type="submit" class="btn btn-default" >提交</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
