@@ -5,6 +5,7 @@ import com.example.demo.Repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -20,6 +21,13 @@ public class MatchController
         match.setMatch_name(match_name);
         match.setInformation(information);
         matchRepository.save(match);
-        return "home";
+        return "redirect:/home";
+    }
+    @RequestMapping("/delmatch")
+    public String delmatch(@RequestParam Long id)
+    {
+        if (matchRepository.findOne(id)!=null)
+            matchRepository.delete(id);
+        return "redirect:/home";
     }
 }

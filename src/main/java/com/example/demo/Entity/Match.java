@@ -8,7 +8,7 @@ public class Match
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String match_name;
     private String information;
 
@@ -30,5 +30,10 @@ public class Match
     public void setMatch_name(String match_name)
     {
         this.match_name = match_name;
+    }
+
+    public Long getId()
+    {
+        return id;
     }
 }
