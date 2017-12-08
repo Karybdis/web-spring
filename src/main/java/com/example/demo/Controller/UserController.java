@@ -5,13 +5,10 @@ import com.example.demo.Entity.UserInfo;
 import com.example.demo.Repository.UserInfoRepository;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 
 @Controller
 public class UserController
@@ -34,9 +31,9 @@ public class UserController
         UserInfo userInfo=new UserInfo();
         user.setUsername(username);
         user.setPassword(password);
-        user.setRole(role);          //名字
         user.setAdmin(0);            //非管理员标记
-        userInfo.setRole(role);
+        userInfo.setUsername(username);
+        userInfo.setRole(role);      //名字
         userInfo.setQq(qq);
         userInfo.setEmail(email);
         userRepository.save(user);
@@ -51,7 +48,7 @@ public class UserController
     }
 
     @PostMapping("/login")   //用户登录
-    public String userlogin(@RequestParam String username, @RequestParam String password, HttpSession session)
+    public String login(@RequestParam String username, @RequestParam String password, HttpSession session)
     {
         if (userRepository.findByUsername(username)!=null)   //存在该用户
         {
@@ -60,8 +57,9 @@ public class UserController
             if (username.equals(exist_username) && password.equals(exist_password))   //输入的账号密码与数据库已有数据一样
             {
                 session.setAttribute("user",userRepository.findByUsername(username));   //添加session
-                session.setAttribute("role",userRepository.findByUsername(username).getRole());
+                session.setAttribute("role",userInfoRepository.findByUsername(username).getRole());
                 session.setAttribute("admin",userRepository.findByUsername(username).getAdmin());
+                session.setAttribute("username",username);
                 return "redirect:/home";
             }
             else return "login";
@@ -77,19 +75,25 @@ public class UserController
         return "login";
     }
 
-    @GetMapping("/userinfo")
-    public String userinfo(Model model,HttpSession session)
+    @GetMapping("/edituser")
+    public String edituser(Model model,HttpSession session)
     {
         UserInfo userInfo=userInfoRepository.findByRole((String)session.getAttribute("role"));
         model.addAttribute("userinfo",userInfo);
-        return "user_info";
+        return "edit_user";
     }
 
-
-
-//    @RequestParam("/edituser")
-//    public String edituser()
-//    {
-//
-//    }
+    @PostMapping("/edituser")
+    public String edituser(@RequestParam String role,@RequestParam String qq,@RequestParam String email,HttpSession session)
+    {
+        String username=(String) session.getAttribute("username");
+        userInfoRepository.delete(userInfoRepository.findByUsername(username));
+        UserInfo userInfo=new UserInfo();
+        userInfo.setRole(role);
+        userInfo.setQq(qq);
+        userInfo.setEmail(email);
+        userInfo.setUsername(username);
+        userInfoRepository.save(userInfo);
+        return "redirect:/edituser";
+    }
 }
