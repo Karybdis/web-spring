@@ -14,7 +14,7 @@ public class MatchController
     @Autowired
     private MatchRepository matchRepository;
 
-    @PostMapping("/addmatch")
+    @PostMapping("/addmatch")  //添加比赛
     public  String  addmatch(@RequestParam String match_name, @RequestParam String information)
     {
         Match match=new Match();
@@ -23,10 +23,10 @@ public class MatchController
         matchRepository.save(match);
         return "redirect:/home";
     }
-    @RequestMapping("/delmatch")
+    @RequestMapping("/delmatch")    //删除比赛
     public String delmatch(@RequestParam Long id)
     {
-        if (matchRepository.findOne(id)!=null)
+        if (matchRepository.findOne(id)!=null)    //该ID的比赛存在则删除
             matchRepository.delete(id);
         return "redirect:/home";
     }

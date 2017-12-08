@@ -24,8 +24,8 @@ public class SessionConfigurer extends WebMvcConfigurerAdapter
     public void addInterceptors(InterceptorRegistry registry)
     {
        InterceptorRegistration addInterceptor = registry.addInterceptor(getUserSecurityInterceptor());
-       addInterceptor.excludePathPatterns("/login","/signup","/home","/error");
-       addInterceptor.addPathPatterns("/**");
+       addInterceptor.excludePathPatterns("/login","/signup","/home","/error");  //不拦截的URL
+       addInterceptor.addPathPatterns("/**");   //拦截URL
     }
 
     public class UserSecurityInterceptor extends HandlerInterceptorAdapter

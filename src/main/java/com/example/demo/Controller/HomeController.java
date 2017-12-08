@@ -19,7 +19,7 @@ public class HomeController
     @RequestMapping("/home")
     public  String home(Model model)
     {
-        ArrayList<Match> matchlist=(ArrayList<Match>) matchRepository.findAll();
+        ArrayList<Match> matchlist=(ArrayList<Match>) matchRepository.findAll();  //获取所有比赛
         model.addAttribute("matchlist",matchlist);
         return "home";
     }
