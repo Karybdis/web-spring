@@ -66,6 +66,7 @@ public class UserController
         }
         else return "login";
     }
+
     @GetMapping("/logout")  //登出
     public String logout(HttpSession session)
     {

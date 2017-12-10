@@ -1,9 +1,6 @@
 package com.example.demo.Entity;
 
-
-
 import javax.persistence.*;
-
 
 @Entity
 @Table(name="userlogin", schema="WebDB")
@@ -44,6 +41,11 @@ public class User
     public void setAdmin(int admin)
     {
         this.admin = admin;
+    }
+
+    public Long getId()
+    {
+        return id;
     }
 }
 

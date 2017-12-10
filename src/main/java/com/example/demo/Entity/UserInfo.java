@@ -2,7 +2,6 @@ package com.example.demo.Entity;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name="user_info", schema="WebDB")
 public class UserInfo

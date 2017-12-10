@@ -3,13 +3,14 @@ package com.example.demo.Entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="match_info", schema="WebDB")
-public class Match
+@Table(name="contest", schema="WebDB")
+public class Contest
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String match_name;
+    @Column(name="contest_name")
+    private String contestName;
     private String information;
 
     public String getInformation()
@@ -22,18 +23,18 @@ public class Match
         this.information = information;
     }
 
-    public String getMatch_name()
-    {
-        return match_name;
-    }
-
-    public void setMatch_name(String match_name)
-    {
-        this.match_name = match_name;
-    }
-
     public Long getId()
     {
         return id;
+    }
+
+    public String getContestName()
+    {
+        return contestName;
+    }
+
+    public void setContestName(String contestName)
+    {
+        this.contestName = contestName;
     }
 }
