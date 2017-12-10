@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link href="https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet"/>
+    <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/typeahead.js/0.11.1/typeahead.bundle.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+</head>
+<body>
+<div th:include="/Navigator::copy"/>
+<div class=" container">
+    <div class="row">
+        <h2 class="text-center">信息修改</h2>
+        <form  th:action="@{/editcontest}" method="post" class="form-horizontal">
+            <div th:each="contest:${contest}">
+                <div class="form-group col-lg-12">
+                    <label for="name">比赛名称</label>
+                    <input type="text" class="form-control" id="name" th:value="${contest.contestName}" name="contestName"/>
+                </div>
+                <!--<div class="form-group col-lg-12">-->
+                <!--<label for="information">比赛详情</label>-->
+                <!--<textarea rows="15" class="form-control" id="information"  name="information"></textarea>-->
+                <!--</div>-->
+            </div>
+            <div class="form-group col-lg-12" >
+                <label for="tags">标签</label>
+                <select multiple="multiple" data-role="tagsinput" id="tags" name="tags" >
+                    <div th:each="tag:${taglist}">
+                        <option th:value="${tag.tagName}"></option>
+                    </div>
+                </select>
+            </div>
+            <div class="form-group" align="center">
+                <input type="submit" class="btn btn-info" value="保存" />
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
