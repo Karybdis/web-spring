@@ -23,11 +23,6 @@ public class Contest
         this.information = information;
     }
 
-    public Long getId()
-    {
-        return id;
-    }
-
     public String getContestName()
     {
         return contestName;
@@ -36,5 +31,15 @@ public class Contest
     public void setContestName(String contestName)
     {
         this.contestName = contestName;
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 }

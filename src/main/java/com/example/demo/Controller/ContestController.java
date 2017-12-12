@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,6 +27,20 @@ public class ContestController
     @Autowired
     private ContestTagRepository contestTagRepository;   //比赛标签联系
 
+    public void contest_tag(ArrayList<String> tags,Contest contest)
+    {
+        for (String tagName:tags)
+        {
+            Tag tag=new Tag();
+            ContestTag contestTag=new ContestTag();
+            contestTag.setContestId(contest.getId());
+            tag.setTagName(tagName);
+            tagRepository.save(tag);
+            contestTag.setTagId(tag.getId());
+            contestTagRepository.save(contestTag);
+        }
+    }
+
     @PostMapping("/addcontest")  //添加比赛
     public  String  addcontest(@RequestParam String contestName, @RequestParam String information, @RequestParam ArrayList<String> tags, HttpSession session)
     {
@@ -37,16 +50,7 @@ public class ContestController
             contest.setContestName(contestName);
             contest.setInformation(information);
             contestRepository.save(contest);
-            for (String tagName:tags)
-            {
-                Tag tag=new Tag();
-                ContestTag contestTag=new ContestTag();
-                contestTag.setContestId(contest.getId());
-                tag.setTagName(tagName);
-                tagRepository.save(tag);
-                contestTag.setTagId(tag.getId());
-                contestTagRepository.save(contestTag);
-            }
+            contest_tag(tags,contest);
         }
         return "redirect:/home";
     }
@@ -76,6 +80,17 @@ public class ContestController
             model.addAttribute("taglist",taglist);
             return "edit_contest";
         }
+        return "redirect:/home";
+    }
+
+    @PostMapping
+    public String editcontest(@RequestParam String contestName,@RequestParam ArrayList<String> tags,@RequestParam Long id)
+    {
+        Contest contest=contestRepository.findOne(id);
+        contest.setContestName(contestName);
+        contestRepository.save(contest);
+        contestTagRepository.delete(contestTagRepository.findByContestId(id));
+        contest_tag(tags,contest);
         return "redirect:/home";
     }
 }

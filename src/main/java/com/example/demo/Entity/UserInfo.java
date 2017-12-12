@@ -53,4 +53,14 @@ public class UserInfo
     {
         this.username = username;
     }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
 }

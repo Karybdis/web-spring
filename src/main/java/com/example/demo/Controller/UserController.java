@@ -88,8 +88,8 @@ public class UserController
     public String edituser(@RequestParam String role,@RequestParam String qq,@RequestParam String email,HttpSession session)
     {
         String username=(String) session.getAttribute("username");
-        userInfoRepository.delete(userInfoRepository.findByUsername(username));
         UserInfo userInfo=new UserInfo();
+        userInfo.setId(userInfoRepository.findByUsername(username).getId());
         userInfo.setRole(role);
         userInfo.setQq(qq);
         userInfo.setEmail(email);
