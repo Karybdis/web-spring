@@ -60,8 +60,12 @@ public class ContestController
     {
         if ((int)session.getAttribute("admin")==1)  //管理员判定
         {
-            if (contestRepository.findOne(id) != null)    //该ID的比赛存在则删除
+            if (contestRepository.findOne(id) != null)    //该ID的比赛存在
+            {
+                contestTagRepository.delete(contestTagRepository.findByContestId(id));
+                
                 contestRepository.delete(id);
+            }
         }
         return "redirect:/home";
     }
@@ -83,11 +87,12 @@ public class ContestController
         return "redirect:/home";
     }
 
-    @PostMapping
-    public String editcontest(@RequestParam String contestName,@RequestParam ArrayList<String> tags,@RequestParam Long id)
+    @PostMapping("/editcontest")
+    public String editcontest(@RequestParam String contestName,@RequestParam String information,@RequestParam ArrayList<String> tags,@RequestParam Long id)
     {
         Contest contest=contestRepository.findOne(id);
         contest.setContestName(contestName);
+        contest.setInformation(information);
         contestRepository.save(contest);
         contestTagRepository.delete(contestTagRepository.findByContestId(id));
         contest_tag(tags,contest);

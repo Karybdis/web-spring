@@ -20,10 +20,10 @@
                     <label for="name">比赛名称</label>
                     <input type="text" class="form-control" id="name" th:value="${contest.contestName}" name="contestName"/>
                 </div>
-                <!--<div class="form-group col-lg-12">-->
-                <!--<label for="information">比赛详情</label>-->
-                <!--<textarea rows="15" class="form-control" id="information"  name="information"></textarea>-->
-                <!--</div>-->
+                <div class="form-group col-lg-12">
+                    <label for="information">比赛详情</label>
+                    <textarea rows="15" class="form-control" id="information"  name="information" th:text="${contest.information}"/>
+                </div>
                 <input type="hidden" th:value="${contest.id}" name="id"/>
             </div>
             <div class="form-group col-lg-12" >
